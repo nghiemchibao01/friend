@@ -1,6 +1,7 @@
 package com.friend.friend.model.friend;
 
 import java.time.LocalDate;
+import com.friend.friend.utils.DateUtils;
 
 public class Info {
 	private  String fullName;
