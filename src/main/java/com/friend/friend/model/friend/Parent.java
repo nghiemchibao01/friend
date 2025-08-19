@@ -3,14 +3,16 @@
 //
 package com.friend.friend.model.friend;
 
+import lombok.Data;
+
+@Data
 public class Parent {
-	private String fatherName;
-	private String motherName;
+	private String FatherName;
+	private String MotherName;
 
-	// Getters & Setters
-	public String getFatherName() { return fatherName; }
-	public void setFatherName(String fatherName) { this.fatherName = fatherName; }
-
-	public String getMotherName() { return motherName; }
-	public void setMotherName(String motherName) { this.motherName = motherName; }
+	public Parent() {}
+	public Parent(String fatherName, String motherName) {
+		FatherName = fatherName;
+		MotherName = motherName;
+	}
 }

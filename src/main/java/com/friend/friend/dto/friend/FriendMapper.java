@@ -1,30 +1,70 @@
 package com.friend.friend.dto.friend;
 
-
-import com.friend.friend.model.friend.Friend;
-import com.friend.friend.model.friend.Contact;
-import com.friend.friend.model.friend.Parent;
-import com.friend.friend.model.friend.Info;
+import com.friend.friend.model.friend.*;
 import org.jetbrains.annotations.NotNull;
 
 public class FriendMapper {
 	public FriendDTO toDTO(@NotNull Friend friend) {
-		FriendDTO dto = new FriendDTO();
-		dto.setFriendId(friend.getId());
-		dto.setFullName(friend.getName());
-		dto.setContactInfo(friend.getContact());
-		dto.setParentInfo(friend.getParent());
-		dto.setAdditionalInfo(friend.getInfo());
-		return dto;
+		var friendContact = friend.getContact();
+		var friendParent = friend.getParent();
+		var friendInfo = friend.getInfo();
+		return new FriendDTO(
+				friend.getId(),
+				friend.getName(),
+				new FriendDTO.ContactDto(
+						safe(friendContact, Contact::getFbUrl),
+						safe(friendContact, Contact::getInsUrl),
+						safe(friendContact, Contact::getPhoneNum),
+						safe(friendContact, Contact::getEmail)
+				),
+				new FriendDTO.ParentDto(
+						safe(friendParent, Parent::getFatherName),
+						safe(friendParent, Parent::getMotherName)
+				),
+				new FriendDTO.InfoDto(
+						safe(friendInfo, Info::getFullName),
+						safe(friendInfo, Info::getNickName),
+						safe(friendInfo, Info::getBirthDay),
+						safe(friendInfo, Info::getHobby),
+						safe(friendInfo, Info::getElementarySchool),
+						safe(friendInfo, Info::getMiddleSchool),
+						safe(friendInfo, Info::getHighSchool),
+						safe(friendInfo, Info::getUniversity)
+				)
+		);
 	}
 
 	public Friend toEntity(@NotNull FriendDTO dto) {
-		Friend friend = new Friend();
-		friend.setId(dto.getFriendId());
-		friend.setName(dto.getFullName());
-		friend.setContact(dto.getContactInfo());
-		friend.setParent(dto.getParentInfo());
-		friend.setInfo(dto.getAdditionalInfo());
-		return friend;
+		var dtoContact = dto.getContactInfo();
+		var dtoParent = dto.getParentInfo();
+		var dtoInfo = dto.getAdditionalInfo();
+		return new Friend(
+				dto.getFriendId(),
+				dto.getFriendName(),
+				new Contact(
+						safe(dtoContact, FriendDTO.ContactDto::getFb),
+						safe(dtoContact, FriendDTO.ContactDto::getIns),
+						safe(dtoContact, FriendDTO.ContactDto::getPhone),
+						safe(dtoContact, FriendDTO.ContactDto::getEmail)
+				),
+				new Parent(
+						safe(dtoParent, FriendDTO.ParentDto::getFatherName),
+						safe(dtoParent, FriendDTO.ParentDto::getMotherName)
+				),
+				new Info(
+						safe(dtoInfo, FriendDTO.InfoDto::getName),
+						safe(dtoInfo, FriendDTO.InfoDto::getNickName),
+						safe(dtoInfo, FriendDTO.InfoDto::getBirth),
+						safe(dtoInfo, FriendDTO.InfoDto::getHobby),
+						safe(dtoInfo, FriendDTO.InfoDto::getElementarySchool),
+						safe(dtoInfo, FriendDTO.InfoDto::getMiddleSchool),
+						safe(dtoInfo, FriendDTO.InfoDto::getHighSchool),
+						safe(dtoInfo, FriendDTO.InfoDto::getUniversity)
+				)
+		);
+	}
+
+	private <T, R> R safe(T obj, java.util.function.Function<T, R> extractor) {
+		return obj == null ? null : extractor.apply(obj);
 	}
 }

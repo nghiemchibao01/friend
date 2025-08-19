@@ -1,7 +1,6 @@
 package com.friend.friend.handler.friend;
 
 import com.friend.friend.dto.friend.FriendDTO;
-import com.friend.friend.model.friend.Friend;
 import com.friend.friend.service.friend.FriendService;
 import com.friend.friend.dto.friend.FriendMapper;
 import org.jetbrains.annotations.NotNull;
@@ -25,9 +24,9 @@ public class FriendHandler {
 		return ServerResponse.ok()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(friendService
-						.getAllFriends()
-						.map(mapper::toDTO),
-					FriendDTO.class);
+								.getAllFriends()
+								.map(mapper::toDTO),
+						FriendDTO.class);
 	}
 
 	public Mono<ServerResponse> getFriendById(@NotNull ServerRequest request) {
@@ -35,8 +34,8 @@ public class FriendHandler {
 		return friendService.getFriendById(id)
 				.map(mapper::toDTO)
 				.flatMap(dto -> ServerResponse.ok()
-					.contentType(MediaType.APPLICATION_JSON)
-					.bodyValue(dto))
+						.contentType(MediaType.APPLICATION_JSON)
+						.bodyValue(dto))
 				.switchIfEmpty(ServerResponse.notFound().build());
 	}
 
@@ -46,8 +45,8 @@ public class FriendHandler {
 				.flatMap(friendService::createFriend)
 				.map(mapper::toDTO)
 				.flatMap(saved -> ServerResponse.ok()
-					.contentType(MediaType.APPLICATION_JSON)
-					.bodyValue(saved));
+						.contentType(MediaType.APPLICATION_JSON)
+						.bodyValue(saved));
 	}
 
 	public Mono<ServerResponse> updateFriend(@NotNull ServerRequest request) {
