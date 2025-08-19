@@ -1,3 +1,6 @@
+//
+// Nghiem Chi Bao
+//
 package com.friend.friend.model.friend;
 
 import java.time.LocalDate;
