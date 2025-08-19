@@ -6,9 +6,8 @@ package com.friend.friend.service.friend;
 import com.friend.friend.repository.friend.FriendRepository;
 import com.friend.friend.model.friend.Friend;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class FriendService {
@@ -18,29 +17,31 @@ public class FriendService {
 		this.friendRepository = friendRepository;
 	}
 
-	public List<Friend> getAllFriends() {
+	public Flux<Friend> getAllFriends() {
 		return friendRepository.findAll();
 	}
 
-	public Optional<Friend> getFriendById(String id) {
+	public Mono<Friend> getFriendById(String id) {
 		return friendRepository.findById(id);
 	}
 
-	public Friend createFriend(Friend friend) {
+	public Mono<Friend> createFriend(Friend friend) {
 		return friendRepository.save(friend);
 	}
 
-	public Friend updateFriend(String id, Friend updatedFriend) {
+	public Mono<Friend> updateFriend(String id, Friend updatedFriend) {
 		return friendRepository.findById(id)
-				.map(friend -> {
+				.flatMap(friend -> {
 					friend.setName(updatedFriend.getName());
 					friend.setParent(updatedFriend.getParent());
+					friend.setInfo(updatedFriend.getInfo());
+					friend.setContact(updatedFriend.getContact());
 					return friendRepository.save(friend);
 				})
-				.orElseThrow(() -> new RuntimeException("Friend not found with id " + id));
+				.switchIfEmpty(Mono.error(new RuntimeException("Friend not found with id " + id)));
 	}
 
-	public void deleteFriend(String id) {
-		friendRepository.deleteById(id);
+	public Mono<Void> deleteFriend(String id) {
+		return friendRepository.deleteById(id);
 	}
 }
