@@ -1,7 +1,6 @@
 package com.friend.friend.handler.friend;
 
 import com.friend.friend.dto.friend.FriendDTO;
-import com.friend.friend.model.friend.Friend;
 import com.friend.friend.service.friend.FriendService;
 import com.friend.friend.dto.friend.FriendMapper;
 import org.jetbrains.annotations.NotNull;

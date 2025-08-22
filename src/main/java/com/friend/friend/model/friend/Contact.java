@@ -3,38 +3,20 @@
 //
 package com.friend.friend.model.friend;
 
+import lombok.Data;
+
+@Data
 public class Contact {
 	private String FbUrl;
 	private  String InsUrl;
-	private String phoneNum;
-	private String email;
+	private String PhoneNum;
+	private String Email;
 
-	// Getters & Setters
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhoneNum() {
-		return phoneNum;
-	}
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
-
-	public String getInsUrl() {
-		return InsUrl;
-	}
-	public void setInsUrl(String insUrl) {
+	public Contact() {}
+	public Contact(String insUrl, String phoneNum, String email, String fbUrl) {
 		InsUrl = insUrl;
-	}
-
-	public String getFbUrl() {
-		return FbUrl;
-	}
-	public void setFbUrl(String fbUrl) {
+		PhoneNum = phoneNum;
+		Email = email;
 		FbUrl = fbUrl;
 	}
 }

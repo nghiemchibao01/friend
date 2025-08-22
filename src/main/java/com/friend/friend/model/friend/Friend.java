@@ -3,51 +3,26 @@
 //
 package com.friend.friend.model.friend;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Document(collection = "friends")
 public class Friend {
 	@Id
-	private String id;
-	private String name;
-	private Contact contact;
-	private Parent parent;
-	private Info info;
+	private String Id;
+	private String Name;
+	private Contact Contact;
+	private Parent Parent;
+	private Info Info;
 
-	// Getters & Setters
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Contact getContact() {
-		return contact;
-	}
-	public void setContact(Contact contact) {
-		this.contact = contact;
-	}
-
-	public Parent getParent() {
-		return parent;
-	}
-	public void setParent(Parent parent) {
-		this.parent = parent;
-	}
-
-	public Info getInfo() {
-		return info;
-	}
-	public void setInfo(Info info) {
-		this.info = info;
+	public Friend() {}
+	public Friend(String id, String name, Contact contact, Parent parent, Info info) {
+		Id = id;
+		Name = name;
+		Contact = contact;
+		Parent = parent;
+		Info = info;
 	}
 }
