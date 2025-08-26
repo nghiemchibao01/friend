@@ -4,7 +4,7 @@ import com.friend.friend.model.friend.*;
 import org.jetbrains.annotations.NotNull;
 
 public class FriendMapper {
-	public FriendDTO toDTO(@NotNull Friend friend) {
+	public static FriendDTO toDTO(@NotNull Friend friend) {
 		var friendContact = friend.getContact();
 		var friendParent = friend.getParent();
 		var friendInfo = friend.getInfo();
@@ -34,7 +34,7 @@ public class FriendMapper {
 		);
 	}
 
-	public Friend toEntity(@NotNull FriendDTO dto) {
+	public static Friend toEntity(@NotNull FriendDTO dto) {
 		var dtoContact = dto.getContactInfo();
 		var dtoParent = dto.getParentInfo();
 		var dtoInfo = dto.getAdditionalInfo();
@@ -64,7 +64,7 @@ public class FriendMapper {
 		);
 	}
 
-	private <T, R> R safe(T obj, java.util.function.Function<T, R> extractor) {
+	private static  <T, R> R safe(T obj, java.util.function.Function<T, R> extractor) {
 		return obj == null ? null : extractor.apply(obj);
 	}
 }
